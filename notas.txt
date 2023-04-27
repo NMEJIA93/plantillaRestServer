@@ -1,0 +1,5 @@
+1 instalar nmp init -y
+2 instal express y dotenv
+
+
+investigar (cors)
