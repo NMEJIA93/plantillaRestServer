@@ -1,5 +1,6 @@
 const express = require('express');
-const cors = require('cors')
+const cors = require('cors');
+const {dbConnection} = require('../database/config.dbMongo');
 
 
 class Server {
@@ -9,6 +10,10 @@ class Server {
         this.port = process.env.PORT;
         this.usuariosPath = '/api/usuarios';
 
+
+        // conectar a Base de datos
+        this.conectarBDmongo();
+
         // Middlewares
         this.middlewares();
 
@@ -17,8 +22,13 @@ class Server {
         this.routes();
     }
 
+
+    async conectarBDmongo(){
+        await dbConnection();
+    }
+
     // Middlewares
-    middlewares(){
+    middlewares() {
         //Directorio publico
         this.app.use(express.static('public'));
         this.app.use(cors());
@@ -28,7 +38,7 @@ class Server {
     }
 
     routes() {
-        this.app.use(this.usuariosPath,require('../routes/usuarios'));
+        this.app.use(this.usuariosPath, require('../routes/usuarios'));
 
     }
 
